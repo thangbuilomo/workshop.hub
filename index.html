@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="loginTitle">Saola Edtech Workshop Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Language Switch -->
+  <div class="lang-switch">
+    <span>EN</span>
+    <label class="switch">
+      <input type="checkbox" id="lang-checkbox">
+      <span class="slider"></span>
+    </label>
+    <span>VI</span>
+  </div>
+
+  <!-- Login View -->
+  <div id="login-view">
+    <div class="login-box">
+      <img src="logos/logo%20rectangular.png" alt="Saola Edtech Logo">
+      <h2 data-i18n="loginTitle">Saola Edtech Workshop Hub</h2>
+      <p data-i18n="loginDesc">Welcome to Saola Edtech Workshop Hub. Please log in to access your video materials.</p>
+      
+      <form id="login-form">
+        <div class="input-group">
+          <input type="text" id="username" data-i18n="usernamePlaceholder" placeholder="Email or Student ID" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" data-i18n="passwordPlaceholder" placeholder="Password" required>
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-primary btn-block" data-i18n="loginBtn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dashboard View -->
+  <div id="dashboard-view" style="display: none;">
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <img src="logos/logo%20rectangular%20165%2048.png" alt="Saola Logo">
+      </div>
+      <ul class="sidebar-nav">
+        <li class="active" data-tab="home" data-sheet="none" data-i18n="welcomeHome">Dashboard</li>
+        <li data-tab="cat_task1" data-sheet="task1" data-i18n="cat_task1">Writing Task 1</li>
+        <li data-tab="cat_task2" data-sheet="task2" data-i18n="cat_task2">Writing Task 2</li>
+        <li data-tab="cat_reading" data-sheet="reading" data-i18n="cat_reading">Reading</li>
+        <li data-tab="cat_listening" data-sheet="listening" data-i18n="cat_listening">Listening</li>
+        <li data-tab="cat_speaking" data-sheet="speaking" data-i18n="cat_speaking">Speaking</li>
+        <li data-tab="cat_other" data-sheet="other" data-i18n="cat_other">Other Workshops</li>
+      </ul>
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+          <span id="user-info">user@email.com</span>
+        </div>
+        <button id="logout-btn" class="btn btn-outline btn-block btn-sm" data-i18n="logoutBtn">Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <button id="mobile-menu-btn">☰</button>
+      
+      <div id="home-view">
+        <div class="welcome-card">
+          <h2 data-i18n="welcomeHome">Welcome to your Dashboard!</h2>
+          <p data-i18n="homeDesc">Select a skill category from the menu to browse our recorded workshops. Your password will be updated weekly.</p>
+        </div>
+      </div>
+      
+      <div id="workshops-container" style="display: none;">
+        <!-- Injected via JS -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Loading Overlay -->
+  <div id="loading-overlay">
+    <div class="spinner"></div>
+    <div data-i18n="loading">Loading...</div>
+  </div>
+
+  <script src="js/i18n.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
