@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saola Edtech - Tiến Độ Tải Video</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0b1329;
+      --card-bg: rgba(255, 255, 255, 0.04);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-color: #f4f7fb;
+      --text-muted: #8b9bb4;
+      --primary: #3b82f6;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #1e293b 0%, #0f172a 100%);
+      color: var(--text-color);
+      min-height: 100vh;
+      padding: 2rem 1.5rem;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Grid Layout */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .dashboard-grid {
+        grid-template-columns: 2fr 1fr;
+      }
+    }
+
+    /* Glass Cards */
+    .glass-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .glass-card h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: #93c5fd;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Active Download Card */
+    .active-download {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .active-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin-bottom: 1rem;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .active-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .meta-item {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      padding: 0.75rem;
+      text-align: center;
+    }
+
+    .meta-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .meta-value {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text-color);
+    }
+
+    /* Progress Bars */
+    .progress-container {
+      margin-bottom: 1rem;
+    }
+
+    .progress-bar-bg {
+      background: rgba(255, 255, 255, 0.08);
+      height: 12px;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+      width: 0%;
+      border-radius: 6px;
+      transition: width 0.5s ease-out;
+    }
+
+    .progress-bar-fill.success {
+      background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+    }
+
+    .progress-text-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Overall Status */
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .status-badge.pending {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--warning);
+    }
+
+    .status-badge.downloading {
+      background: rgba(59, 130, 246, 0.1);
+      color: var(--primary);
+      animation: pulse 1.5s infinite;
+    }
+
+    .status-badge.completed {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--success);
+    }
+
+    .status-badge.failed {
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    /* Search & Filter */
+    .table-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      gap: 1rem;
+    }
+
+    .search-input {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 0.75rem 1rem;
+      color: var(--text-color);
+      font-family: inherit;
+      width: 100%;
+      max-width: 350px;
+      outline: none;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.15);
+    }
+
+    /* File Table */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: 16px;
+      border: 1px solid var(--card-border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    th, td {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    th {
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+      transition: var(--transition);
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .file-name-cell {
+      max-width: 400px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-weight: 500;
+    }
+
+    .folder-cell {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Saola Edtech - Tiến Độ Tải Video</h1>
+      <p>Trình giám sát tải bài giảng tự động trực tiếp từ Google Drive</p>
+    </header>
+
+    <div class="dashboard-grid">
+      <!-- Active Download Box -->
+      <div class="glass-card active-download">
+        <h2><span>🎬</span> Đang tải xuống</h2>
+        <div id="no-active-download" class="empty-state" style="display: block;">
+          Hiện tại không có file nào đang tải.
+        </div>
+        <div id="active-download-details" style="display: none;">
+          <div class="active-title" id="active-filename">Tên bài giảng đang tải...</div>
+          <div class="active-meta">
+            <div class="meta-item">
+              <div class="meta-label">Đã tải</div>
+              <div class="meta-value" id="active-downloaded">0 MB</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tổng dung lượng</div>
+              <div class="meta-value" id="active-total">0 MB</div>
+            </div>
+            <div class="meta-item">
+              <div class="meta-label">Tốc độ</div>
+              <div class="meta-value" id="active-speed">0 MB/s</div>
+            </div>
+          </div>
+          <div class="progress-container">
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="active-progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text-row">
+              <span>Đang xử lý</span>
+              <span id="active-progress-percent">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Overall Status Card -->
+      <div class="glass-card">
+        <h2><span>📊</span> Tiến độ tổng quát</h2>
+        <div style="margin-top: 1rem;">
+          <div class="progress-container">
+            <div class="progress-bar-bg" style="height: 16px;">
+              <div class="progress-bar-fill success" id="overall-progress-fill" style="width: 0%"></div>
+            </div>
+            <div class="progress-text-row" style="margin-top: 0.5rem;">
+              <span id="overall-progress-text">Đã tải: 0 / 0 files</span>
+              <span id="overall-progress-percent" style="font-weight: 600; color: var(--success);">0%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Files Table -->
+    <div class="glass-card">
+      <div class="table-controls">
+        <h2><span>📁</span> Danh sách toàn bộ bài giảng</h2>
+        <input type="text" class="search-input" id="search-box" placeholder="Tìm kiếm tên bài giảng..." oninput="filterTable()">
+      </div>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Tên bài giảng (Video)</th>
+              <th>Thư mục lưu trữ</th>
+              <th>Dung lượng</th>
+              <th>Trạng thái</th>
+            </tr>
+          </thead>
+          <tbody id="files-table-body">
+            <tr>
+              <td colspan="5" class="empty-state">Đang tải danh sách dữ liệu...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let allFiles = [];
+
+    async function checkProgress() {
+      try {
+        const response = await fetch('progress.json?t=' + new Date().getTime());
+        if (!response.ok) return;
+        const data = await response.json();
+        
+        // Update Overall Progress
+        const total = data.total_files || 0;
+        const completed = data.completed_files || 0;
+        const overallPercent = total > 0 ? (completed / total * 100).toFixed(1) : 0;
+        
+        document.getElementById('overall-progress-fill').style.width = overallPercent + '%';
+        document.getElementById('overall-progress-percent').textContent = overallPercent + '%';
+        document.getElementById('overall-progress-text').textContent = `Đã tải: ${completed} / ${total} files`;
+
+        // Update Active Download Details
+        if (data.current_file) {
+          document.getElementById('no-active-download').style.display = 'none';
+          document.getElementById('active-download-details').style.display = 'block';
+          
+          document.getElementById('active-filename').textContent = data.current_file.name;
+          document.getElementById('active-downloaded').textContent = (data.current_file.downloaded_bytes / (1024*1024)).toFixed(1) + ' MB';
+          
+          const totalBytes = data.current_file.size_bytes;
+          document.getElementById('active-total').textContent = totalBytes > 0 ? (totalBytes / (1024*1024)).toFixed(1) + ' MB' : 'Đang tính...';
+          document.getElementById('active-speed').textContent = data.current_file.speed_mbps.toFixed(2) + ' MB/s';
+          
+          document.getElementById('active-progress-fill').style.width = data.current_file.percent + '%';
+          document.getElementById('active-progress-percent').textContent = data.current_file.percent + '%';
+        } else {
+          document.getElementById('no-active-download').style.display = 'block';
+          document.getElementById('active-download-details').style.display = 'none';
+        }
+
+        // Keep copy of all files to filter
+        allFiles = data.files || [];
+        renderTable(allFiles);
+
+      } catch (err) {
+        console.error("Lỗi khi kiểm tra tiến độ:", err);
+      }
+    }
+
+    function renderTable(filesList) {
+      const tbody = document.getElementById('files-table-body');
+      if (filesList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="empty-state">Không tìm thấy file nào.</td></tr>`;
+        return;
+      }
+
+      let html = '';
+      filesList.forEach((file, index) => {
+        let statusBadge = '';
+        if (file.status === 'completed') statusBadge = '<span class="status-badge completed">Đã tải</span>';
+        else if (file.status === 'downloading') statusBadge = '<span class="status-badge downloading">Đang tải</span>';
+        else if (file.status === 'failed') statusBadge = '<span class="status-badge failed">Lỗi</span>';
+        else statusBadge = '<span class="status-badge pending">Đang chờ</span>';
+
+        html += `
+          <tr>
+            <td>${index + 1}</td>
+            <td class="file-name-cell" title="${file.name}">${file.name}</td>
+            <td class="folder-cell">${file.folder}</td>
+            <td>${file.size}</td>
+            <td>${statusBadge}</td>
+          </tr>
+        `;
+      });
+      tbody.innerHTML = html;
+    }
+
+    function filterTable() {
+      const query = document.getElementById('search-box').value.toLowerCase().trim();
+      if (!query) {
+        renderTable(allFiles);
+        return;
+      }
+      const filtered = allFiles.filter(file => 
+        file.name.toLowerCase().includes(query) || 
+        file.folder.toLowerCase().includes(query)
+      );
+      renderTable(filtered);
+    }
+
+    // Auto-update every 1 second
+    setInterval(checkProgress, 1000);
+    // Initial fetch
+    checkProgress();
+  </script>
+</body>
+</html>

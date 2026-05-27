@@ -81,7 +81,8 @@ function handleGetData() {
     SHEET_NAMES.READING, 
     SHEET_NAMES.LISTENING, 
     SHEET_NAMES.SPEAKING, 
-    SHEET_NAMES.OTHER
+    SHEET_NAMES.OTHER,
+    'Admin'
   ];
   
   sheetsToFetch.forEach(function(sheetName) {
