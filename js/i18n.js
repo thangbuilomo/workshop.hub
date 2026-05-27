@@ -39,6 +39,13 @@ const i18n = {
     
     welcomeHome: "Welcome to your Dashboard!",
     homeDesc: "Select a skill category from the menu to browse our recorded workshops. Your password will be updated weekly.",
+    
+    stat1_title: "Comprehensive Material",
+    stat1_desc: "Access all your IELTS skills in one place.",
+    stat2_title: "Watch Anywhere",
+    stat2_desc: "Stream recorded sessions smoothly.",
+    stat3_title: "Stay Updated",
+    stat3_desc: "New materials added regularly.",
   },
   vi: {
     loginTitle: "Saola Edtech Workshop Hub",
@@ -80,5 +87,12 @@ const i18n = {
     
     welcomeHome: "Chào mừng đến với Trang tổng hợp!",
     homeDesc: "Vui lòng chọn một kỹ năng từ menu để xem lại các buổi workshop. Mật khẩu của bạn sẽ được làm mới hàng tuần.",
+    
+    stat1_title: "Tài liệu đầy đủ",
+    stat1_desc: "Truy cập mọi kỹ năng IELTS tại một nơi duy nhất.",
+    stat2_title: "Học mọi nơi",
+    stat2_desc: "Xem lại các video bài giảng một cách mượt mà.",
+    stat3_title: "Luôn cập nhật",
+    stat3_desc: "Nội dung và tài liệu mới được bổ sung thường xuyên.",
   }
 };
