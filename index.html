@@ -9,15 +9,6 @@
 </head>
 <body>
 
-  <!-- Language Switch -->
-  <div class="lang-switch">
-    <span>EN</span>
-    <label class="switch">
-      <input type="checkbox" id="lang-checkbox">
-      <span class="slider"></span>
-    </label>
-    <span>VI</span>
-  </div>
 
   <!-- Login View -->
   <div id="login-view">
@@ -58,6 +49,14 @@
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
           <span id="user-info">user@email.com</span>
         </div>
+        <div class="lang-switch-sidebar" style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-bottom: 1rem;">
+          <span style="font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">EN</span>
+          <label class="switch">
+            <input type="checkbox" id="lang-checkbox">
+            <span class="slider"></span>
+          </label>
+          <span style="font-weight: 600; font-size: 0.9rem; color: var(--primary-dark);">VI</span>
+        </div>
         <button id="logout-btn" class="btn btn-outline btn-block btn-sm" data-i18n="logoutBtn">Logout</button>
       </div>
     </aside>
@@ -67,8 +66,10 @@
       
       <div id="home-view">
         <div class="welcome-header">
-          <h2 data-i18n="welcomeHome">Welcome to your Dashboard!</h2>
-          <p data-i18n="homeDesc">Select a skill category from the menu to browse our recorded workshops. Your password will be updated weekly.</p>
+          <h2 data-i18n="dashboardTitle">Welcome to Saola's Workshop Hub</h2>
+          <p data-i18n="homeDesc1" style="margin-bottom: 0.5rem; max-width: 800px;">This is an internal learning platform for Saola Edtech students, providing all recorded Workshop videos and in-depth supplementary materials for IELTS skills.</p>
+          <p data-i18n="homeDesc2" style="margin-bottom: 0.5rem; max-width: 800px;">Select a skill category from the menu to browse our recorded workshops.</p>
+          <p data-i18n="homeDescWarning" style="color: #d97706; font-weight: 500; background: #fef3c7; padding: 0.75rem; border-radius: 8px; border-left: 4px solid #d97706; margin-top: 1rem; max-width: 800px;">Note: Your password will be updated weekly. Please contact your teacher if you cannot log in.</p>
         </div>
         <div class="dashboard-stats">
           <div class="stat-card">
